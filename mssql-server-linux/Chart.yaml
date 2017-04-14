@@ -1,5 +1,5 @@
 name: mssql-server-linux
-version: 0.0.2
+version: 0.0.5
 description: Microsoft SQL Server
 keywords:
 - mssql

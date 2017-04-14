@@ -1,5 +1,5 @@
 ## mssql-server-linux image repository
-image: "mssql-server-linux"
+image: "microsoft/mssql-server-linux"
 ## mssql-server-linux image version
 ## ref: https://hub.docker.com/r/microsoft/mssql-server-linux
 ##
@@ -12,7 +12,7 @@ imageTag: "latest"
 imagePullPolicy: Always
 
 # Accept the license agreement
-acceptEULA: Y
+acceptEULA: "Y"
 # TODO: Remove default password
 saPassword: "Yukon900"
 
