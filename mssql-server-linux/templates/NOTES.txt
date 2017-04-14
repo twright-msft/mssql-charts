@@ -1,0 +1,16 @@
+SQL Server can be accessed via port 1433 on the following DNS name from within your cluster:
+{{ template "fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+
+To get your user password run:
+
+    SAPASSWORD=$(kubectl get secret --namespace {{ .Release.Namespace }} {{ template "fullname" . }} -o jsonpath="{.data.mssql-sa-password}" | base64 --decode; echo)
+
+To connect to your database run the following command (using the env variable from above):
+
+TODO: Need to pass in SAPASSWORD like this instead of on the command line
+--env "SA_PASSWORD=$SAPASSWORD"
+   
+   kubectl run {{ template "fullname" . }}-client --rm --tty -i --image mssql-server-linux \
+   --command -- /opt/mssql/bin/sqlcmd -U {{ default "sa" }} \
+   -S {{ template "fullname" . }} {{ default "master" }} \
+   -P $SAPASSWORD

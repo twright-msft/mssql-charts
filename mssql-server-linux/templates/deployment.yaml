@@ -1,0 +1,65 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+    spec:
+      containers:
+      - name: {{ template "fullname" . }}
+        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        imagePullPolicy: {{ default "" .Values.imagePullPolicy | quote }}
+        env:
+        - name: ACCEPT_EULA
+          #TODO: Would it make the lawyers happy if the default here was N?
+          value: {{ default "Y" .Values.acceptEULA | quote }}
+        - name: DATA
+          value: /var/opt/mssql/data
+        - name: SA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "fullname" . }}
+              key: mssql-sa-password
+        - name: POD_IP
+          valueFrom: { fieldRef: { fieldPath: status.podIP } }
+        ports:
+        - name: mssql
+          containerPort: 1433
+        #TODO: Need to create a liveness probe
+        livenessProbe:
+          exec:
+            command:
+            - echo
+          initialDelaySeconds: 60
+          timeoutSeconds: 5
+          failureThreshold: 6
+        #TODO: Need to create a readiness probe
+        readinessProbe:
+          exec:
+            command:
+            - echo
+          initialDelaySeconds: 5
+          timeoutSeconds: 3
+          periodSeconds: 5
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+        volumeMounts:
+        - name: data
+          mountPath: /var/opt/mssql/data
+          subPath: {{ .Values.persistence.subPath }}
+      volumes:
+      - name: data
+      {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingClaim | default (include "fullname" .) }}
+      {{- else }}
+        emptyDir: {}
+      {{- end -}}

@@ -1,0 +1,17 @@
+name: mssql-server-linux
+version: 0.0.2
+description: Microsoft SQL Server
+keywords:
+- mssql
+- Microsoft
+- server
+- database
+- sql
+home: https://www.microsoft.com
+icon: https://azure.microsoft.com/svghandler/sql-database/?width=384&height=395
+sources:
+- https://github.com/kubernetes/charts
+- https://github.com/microsoft/mssql-docker
+maintainers:
+- name: twright-msft
+engine: gotpl
