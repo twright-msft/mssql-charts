@@ -3,7 +3,7 @@ SQL Server can be accessed via port 1433 on the following DNS name from within y
 
 To get your user password run:
 
-    SAPASSWORD=$(kubectl get secret --namespace {{ .Release.Namespace }} {{ template "fullname" . }} -o jsonpath="{.data.mssql-sa-password}" | base64 --decode; echo)
+    SAPASSWORD=$(kubectl get secret --namespace {{ .Release.Namespace }} {{ template "fullname" . }} -o jsonpath="{.data.mssql-password}" | base64 --decode; echo)
 
 To connect to your database run the following command (using the env variable from above):
 
