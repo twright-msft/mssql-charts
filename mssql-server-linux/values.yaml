@@ -14,7 +14,7 @@ imagePullPolicy: Always
 # Accept the license agreement
 acceptEULA: "Y"
 # TODO: Remove default password
-saPassword: "Yukon900"
+mssql-password: "Yukon900"
 
 ## Persist data to a persitent volume
 persistence:

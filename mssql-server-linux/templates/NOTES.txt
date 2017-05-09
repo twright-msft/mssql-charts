@@ -10,7 +10,7 @@ To connect to your database run the following command (using the env variable fr
 TODO: Need to pass in SAPASSWORD like this instead of on the command line
 --env "SA_PASSWORD=$SAPASSWORD"
    
-   kubectl run {{ template "fullname" . }}-client --rm --tty -i --image mssql-server-linux \
+   kubectl run {{ template "fullname" . }}-client --rm --tty -i --image microsoft/mssql-server-linux \
    --command -- /opt/mssql/bin/sqlcmd -U {{ default "sa" }} \
    -S {{ template "fullname" . }} {{ default "master" }} \
    -P $SAPASSWORD
