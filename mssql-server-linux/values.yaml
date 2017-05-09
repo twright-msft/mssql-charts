@@ -12,7 +12,7 @@ imageTag: "latest"
 imagePullPolicy: Always
 
 # Accept the license agreement
-acceptEULA: Y
+acceptEULA: "Y"
 # TODO: Remove default password
 saPassword: "Yukon900"
 
